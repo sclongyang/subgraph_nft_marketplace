@@ -1,6 +1,31 @@
-type ExampleEntity @entity {
+type ActiveItem @entity {
   id: ID!
-  count: BigInt!
+  buyer: Bytes!
   seller: Bytes! # address
   nftAddress: Bytes! # address
+  tokenId: BigInt!
+  price: BigInt
+}
+
+type AddedItem @entity {
+  id: ID!  
+  seller: Bytes! # address
+  nftAddress: Bytes! # address
+  tokenId: BigInt!
+  price: BigInt
+}
+
+type BuyNFT @entity {
+  id: ID!
+  buyer: Bytes!
+  seller: Bytes! # address
+  nftAddress: Bytes! # address
+  tokenId: BigInt!  
+}
+
+type DeletedItem @entity {
+  id: ID!  
+  seller: Bytes! # address
+  nftAddress: Bytes! # address
+  tokenId: BigInt!  
 }

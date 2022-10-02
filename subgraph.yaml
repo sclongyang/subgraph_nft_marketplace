@@ -1,4 +1,4 @@
-specVersion: 0.0.1
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
@@ -8,15 +8,15 @@ dataSources:
     source:
       address: "0x31988dc8a9D2B563Bdf955bEB950e4E209b9a0c8"
       abi: NFTMarketplace
+      startBlock: 7695949
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - AddedItem
         - BuyNFT
         - DeletedItem
-        - WithdrawProceeds
       abis:
         - name: NFTMarketplace
           file: ./abis/NFTMarketplace.json
@@ -27,6 +27,4 @@ dataSources:
           handler: handleBuyNFT
         - event: DeletedItem(address,address,uint256)
           handler: handleDeletedItem
-        - event: WithdrawProceeds(address,uint256)
-          handler: handleWithdrawProceeds
       file: ./src/nft-marketplace.ts
