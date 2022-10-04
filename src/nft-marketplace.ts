@@ -1,4 +1,4 @@
-import { BigInt, Address } from "@graphprotocol/graph-ts"
+import { BigInt, Address, log } from "@graphprotocol/graph-ts"
 import {
   NFTMarketplace,
   AddedItem as AddedItemEvent,
@@ -8,6 +8,8 @@ import {
 import { ActiveItem, AddedItem, DeletedItem, BuyNFT } from "../generated/schema"
 
 export function handleAddedItem(event: AddedItemEvent): void {
+  log.log(log.Level.INFO, `handleAddedItem price: ${event.params.price}`)
+
   let id = getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
   let addedItem = AddedItem.load(id)
   let activeItem = ActiveItem.load(id)
@@ -32,7 +34,9 @@ export function handleAddedItem(event: AddedItemEvent): void {
   activeItem.save()
 }
 
-export function handleBuyNFT(event: BuyNFTEvent): void {
+export function handleBuyNFT(event: BuyNFTEvent): void {  
+  log.log(log.Level.INFO, `handleBuyNFT start`)
+
   let itemBought = BuyNFT.load(
     getIdFromEventParams(event.params.tokenId, event.params.nftAddress)
   )
@@ -47,7 +51,9 @@ export function handleBuyNFT(event: BuyNFTEvent): void {
   itemBought.buyer = event.params.buyer
   itemBought.nftAddress = event.params.nftAddress
   itemBought.tokenId = event.params.tokenId
-  activeItem!.buyer = event.params.buyer
+  itemBought.seller = event.params.seller
+  activeItem!.buyer = event.params.buyer  
+  log.log(log.Level.INFO, `handleBuyNFT buyer: ${activeItem!.buyer}`)
 
   itemBought.save()
   activeItem!.save()
